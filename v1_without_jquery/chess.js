@@ -1,21 +1,26 @@
-// Starting position for a new game
-const startingBoard = [
-	["&#9820;", "&#9822;", "&#9821;", "&#9819;", "&#9818;", "&#9821;", "&#9822;", "&#9820;"],
-	["&#9823;", "&#9823;", "&#9823;", "&#9823;", "&#9823;", "&#9823;", "&#9823;", "&#9823;"],
-	["&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;"],
-	["&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;"],
-	["&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;"],
-	["&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;"],
-	["&#9817;", "&#9817;", "&#9817;", "&#9817;", "&#9817;", "&#9817;", "&#9817;", "&#9817;"],
-	["&#9814;", "&#9816;", "&#9815;", "&#9813;", "&#9812;", "&#9815;", "&#9816;", "&#9814;"]
-];
 
-let board = startingBoard.map(function(row) {
-	return row.slice();
-});
+let startingBoard = [];
+let board = [];
+
+// Load the starting position from the JSON file and draw the board
+function render_chessboard() {
+	fetch("chessboard.json")
+		.then(function(response) {
+			return response.json();
+		})
+		.then(function(data) {
+			startingBoard = data.chessboard.map(function(row) {
+				return Object.values(row);
+			});
+			board = startingBoard.map(function(row) {
+				return row.slice();
+			});
+			draw_chessboard();
+		});
+}
 
 // Draw the current board
-function render_chessboard() {
+function draw_chessboard() {
 	let chessboard = document.getElementById("chessboard");
 	let table = document.createElement("table");
 	table.className = "chessboard";
@@ -61,5 +66,5 @@ function reset_board() {
 	board = startingBoard.map(function(row) {
 		return row.slice();
 	});
-	render_chessboard();
+	draw_chessboard();
 }
