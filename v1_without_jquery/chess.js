@@ -1,84 +1,65 @@
+// Starting position for a new game
+const startingBoard = [
+	["&#9820;", "&#9822;", "&#9821;", "&#9819;", "&#9818;", "&#9821;", "&#9822;", "&#9820;"],
+	["&#9823;", "&#9823;", "&#9823;", "&#9823;", "&#9823;", "&#9823;", "&#9823;", "&#9823;"],
+	["&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;"],
+	["&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;"],
+	["&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;"],
+	["&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;"],
+	["&#9817;", "&#9817;", "&#9817;", "&#9817;", "&#9817;", "&#9817;", "&#9817;", "&#9817;"],
+	["&#9814;", "&#9816;", "&#9815;", "&#9813;", "&#9812;", "&#9815;", "&#9816;", "&#9814;"]
+];
+
+let board = startingBoard.map(function(row) {
+	return row.slice();
+});
+
+// Draw the current board
 function render_chessboard() {
-    var request = new XMLHttpRequest();
+	let chessboard = document.getElementById("chessboard");
+	let table = document.createElement("table");
+	table.className = "chessboard";
 
-    request.open("GET", "chessboard.json", true);
+	board.forEach(function(row, rowIndex) {
+		let tableRow = document.createElement("tr");
 
-    request.onreadystatechange = function () {
-        if (request.readyState === 4 && request.status === 200) {
-            var boardData = JSON.parse(request.responseText);
-            var boardContainer = document.getElementById("chessboard");
+		row.forEach(function(piece, columnIndex) {
+			let cell = document.createElement("td");
+			cell.id = String.fromCharCode(97 + columnIndex) + (8 - rowIndex);
+			cell.innerHTML = piece;
+			tableRow.appendChild(cell);
+		});
 
-            var boardLayout = document.createElement("div");
-            boardLayout.className = "board-layout";
+		table.appendChild(tableRow);
+	});
 
-            var rankLabels = document.createElement("div");
-            rankLabels.className = "rank-labels";
-
-            for (var rank = 8; rank >= 1; rank--) {
-                var rankLabel = document.createElement("span");
-                rankLabel.innerHTML = rank;
-                rankLabels.appendChild(rankLabel);
-            }
-
-            var boardWrapper = document.createElement("div");
-            boardWrapper.className = "board-wrapper";
-
-            var table = document.createElement("table");
-            table.className = "chessboard";
-
-            for (var row = 0; row < boardData.chessboard.length; row++) {
-                var tableRow = document.createElement("tr");
-                var rowData = boardData.chessboard[row];
-
-                for (var square in rowData) {
-                    var tableCell = document.createElement("td");
-
-                    tableCell.id = square;
-                    tableCell.innerHTML = rowData[square];
-
-                    tableRow.appendChild(tableCell);
-                }
-
-                table.appendChild(tableRow);
-            }
-
-            var fileLabels = document.createElement("div");
-            fileLabels.className = "file-labels";
-
-            var files = ["a", "b", "c", "d", "e", "f", "g", "h"];
-
-            for (var file = 0; file < files.length; file++) {
-                var fileLabel = document.createElement("span");
-                fileLabel.innerHTML = files[file];
-                fileLabels.appendChild(fileLabel);
-            }
-
-            boardWrapper.appendChild(table);
-            boardWrapper.appendChild(fileLabels);
-            boardLayout.appendChild(rankLabels);
-            boardLayout.appendChild(boardWrapper);
-
-            boardContainer.innerHTML = "";
-            boardContainer.appendChild(boardLayout);
-        }
-    };
-
-    request.send();
+	chessboard.replaceChildren(table);
 }
 
+// Move a piece between two board locations
 function move_piece() {
-    var sourceSquare = document.getElementById("src").value.trim().toLowerCase();
-    var destinationSquare = document.getElementById("dst").value.trim().toLowerCase();
+	let source = document.getElementById("src").value.toLowerCase();
+	let destination = document.getElementById("dst").value.toLowerCase();
+	let sourceCell = document.getElementById(source);
+	let destinationCell = document.getElementById(destination);
 
-    var sourceCell = document.getElementById(sourceSquare);
-    var destinationCell = document.getElementById(destinationSquare);
+	if (!sourceCell || !destinationCell || source === destination || sourceCell.innerHTML === "&nbsp;") {
+		return false;
+	}
 
-    if (sourceCell && destinationCell) {
-        destinationCell.innerHTML = sourceCell.innerHTML;
-        sourceCell.innerHTML = "&nbsp;";
-    }
+	destinationCell.innerHTML = sourceCell.innerHTML;
+	sourceCell.innerHTML = "&nbsp;";
+	board[8 - Number(source[1])][source.charCodeAt(0) - 97] = "&nbsp;";
+	board[8 - Number(destination[1])][destination.charCodeAt(0) - 97] = destinationCell.innerHTML;
+	document.getElementById("src").value = "";
+	document.getElementById("dst").value = "";
+	return false;
 }
 
+// Restore the starting position
 function reset_board() {
-    window.location.reload();
+	board = startingBoard.map(function(row) {
+		return row.slice();
+	});
+	render_chessboard();
 }
