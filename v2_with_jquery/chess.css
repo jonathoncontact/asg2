@@ -1,0 +1,270 @@
+
+
+.board-frame {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.rank-labels {
+    display: grid;
+    grid-template-rows: repeat(8, 48px);
+    align-items: center;
+    justify-items: center;
+    margin-right: 4px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #222;
+}
+
+.board-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#chessboard {
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+:root {
+    --ink: #17212b;
+    --muted: #586575;
+    --paper: #f4f1eb;
+    --panel: #fffdf8;
+    --light-square: #f5e9cf;
+    --dark-square: #7d9b8a;
+    --line: #d8d1c5;
+    --accent: #b24c38;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    min-width: 320px;
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: Georgia, "Times New Roman", serif;
+    line-height: 1.6;
+}
+
+.site-header {
+    padding: 2.5rem 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--line);
+    background: var(--panel);
+    text-align: center;
+}
+
+.eyebrow {
+    margin: 0 0 0.25rem;
+    color: var(--accent);
+    font-family: "Trebuchet MS", sans-serif;
+    font-size: 0.75rem;
+    font-weight: bold;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+h1,
+h2 {
+    line-height: 1.15;
+}
+
+h1 {
+    margin: 0;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+}
+
+h2 {
+    margin: 0 0 1.5rem;
+    font-size: 1.65rem;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+    font-family: "Trebuchet MS", sans-serif;
+    font-size: 0.9rem;
+}
+
+a {
+    color: var(--accent);
+}
+
+nav a {
+    padding: 0.2rem 0;
+    color: var(--muted);
+    text-decoration: none;
+}
+
+nav a:hover,
+nav a:focus-visible,
+nav a[aria-current="page"] {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 0.25rem;
+}
+
+main {
+    width: min(100% - 2.5rem, 720px);
+    margin: 0 auto;
+}
+
+form.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 1.5rem auto 0;
+}
+
+.board-section {
+    padding: 3rem 0 4rem;
+    text-align: center;
+}
+
+.board-layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+}
+
+.rank-labels,
+.file-labels {
+    color: var(--muted);
+    font-family: "Trebuchet MS", sans-serif;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.rank-labels {
+    display: grid;
+    grid-template-rows: repeat(8, 1fr);
+    align-self: stretch;
+    align-items: center;
+    padding-bottom: 1.35rem;
+}
+
+.board-wrapper {
+    width: min(100%, 520px);
+}
+
+.chessboard {
+    width: 100%;
+    border: 3px solid var(--ink);
+    border-collapse: collapse;
+    table-layout: fixed;
+    background: var(--light-square);
+    box-shadow: 0 0.75rem 1.5rem rgba(23, 33, 43, 0.12);
+}
+
+.chessboard td {
+    width: 12.5%;
+    aspect-ratio: 1;
+    padding: 0;
+    text-align: center;
+    font-family: "Times New Roman", serif;
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.chessboard tr:nth-child(odd) td:nth-child(even),
+.chessboard tr:nth-child(even) td:nth-child(odd) {
+    background: var(--dark-square);
+}
+
+.chessboard tr:nth-child(odd) td:nth-child(odd),
+.chessboard tr:nth-child(even) td:nth-child(even) {
+    background: var(--light-square);
+}
+
+
+/* Stack the chessboard and file labels. */
+body > div > div:first-of-type > div:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: max-content;
+}
+
+/* Align file labels with the eight board columns. */
+body > div > div:first-of-type > div:nth-child(2) > div {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    width: 100%;
+    min-height: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+    color: #222;
+}
+
+
+/* keeps letters under each square */
+.file-labels {
+    display: grid;
+    grid-template-columns: repeat(8, 48px);
+    justify-content: center;
+    gap: 0;
+    margin: 0 auto;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Size and center each chessboard square. */
+td {
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    text-align: center;
+    font-size: 24px;
+}
+
+.chessboard {
+    width: 384px;
+    height: 384px;
+    border-collapse: collapse;
+    border: 1px solid #000;
+    table-layout: fixed;
+}
+
+.chessboard td {
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    text-align: center;
+    font-size: 24px;
+}
+
+/* Color the first half of the checkerboard pattern. */
+.chessboard tr:nth-child(odd) td:nth-child(odd),
+.chessboard tr:nth-child(even) td:nth-child(even) {
+    background: #ffffff;
+}
+
+/* Color the second half of the checkerboard pattern. */
+.chessboard tr:nth-child(odd) td:nth-child(even),
+.chessboard tr:nth-child(even) td:nth-child(odd) {
+    background: #cfe8ff;
+}
+
+/* Center the form and its contents. */
+form.center {
+    width: fit-content;
+    margin: 2rem auto;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}

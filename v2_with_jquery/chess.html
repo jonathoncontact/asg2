@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>HTML Chess Board</title>
+  <link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="chess.css" />
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="chess.js"></script>
+
+</head>
+
+<body>
+  <nav aria-label="Main navigation">
+    <a href="chess.html">Chess</a>
+    <a href="rules.html">Rules</a>
+    <a href="history.html">History</a>
+    <a href="about.html">About</a>
+  </nav>
+  <div>
+    <h3 class="text-center">CSCI 565: Assignment 2 by Jonathon Tucker</h3>
+    <div class="board-frame">
+      <div class="board-stack">
+        <div id="chessboard"></div>
+      </div>
+    </div>
+  </div>
+
+  <form class="d-flex justify-content-center align-items-end gap-2 mt-4">
+    <div>
+      <label for="src" class="form-label mb-1">From</label>
+      <input type="text" class="form-control" id="src" placeholder="e2" maxlength="2"
+        pattern="[a-hA-H][1-8]" required>
+    </div>
+    <div>
+      <label for="dst" class="form-label mb-1">To</label>
+      <input type="text" class="form-control" id="dst" placeholder="e4" maxlength="2"
+        pattern="[a-hA-H][1-8]" required>
+    </div>
+    <button type="button" id="move-button" class="btn btn-primary">Move</button>
+    <button type="button" id="reset-button" class="btn btn-secondary">Reset</button>
+  </form>
+  <hr/>
+</body>
+
+</html>
