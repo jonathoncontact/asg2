@@ -5,19 +5,18 @@ $(function () {
 });
 
 function render_chessboard() {
-    $.getJSON("chessboard.json", function (data) {
-        let table = $("<table>", { class: "chessboard" });
+    let data = JSON.parse($("#board-data").html());
+    let table = $("<table>", { class: "chessboard" });
 
-        $.each(data.chessboard, function (_, row) {
-            let table_row = $("<tr>");
-            $.each(row, function (square, piece) {
-                table_row.append($("<td>", { id: square }).html(piece));
-            });
-            table.append(table_row);
+    $.each(data.chessboard, function (_, row) {
+        let table_row = $("<tr>");
+        $.each(row, function (square, piece) {
+            table_row.append($("<td>", { id: square }).html(piece));
         });
-
-        $("#chessboard").empty().append(table);
+        table.append(table_row);
     });
+
+    $("#chessboard").empty().append(table);
 }
 
 function move_piece() {
